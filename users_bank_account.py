@@ -14,8 +14,7 @@ class CuentaBancaria:
         return self
 
     def mostrar_info_cuenta(self):
-        print('balance: $%d'%(self.balance))
-        return self
+        return 'balance: $%d'%(self.balance)
 
     def generar_interes(self):
         if self.balance > 0:
@@ -30,16 +29,20 @@ class User:
     def  __init__ ( self , name, email):
         self.name = name
         self.email = email
-        self.cuenta  =  CuentaBancaria(tasa_interes = 0.02 , balance = 0 )
+        self.cuenta  = {
+            "checking" : CuentaBancaria(tasa_interes = 0.02 , balance = 0 ),
+            "savings" : CuentaBancaria(tasa_interes = 0.06 , balance = 0 )
+        }
     
     def hacer_deposito(self, amount):
-        self.cuenta.deposito(amount)
+        self.cuenta["savings"].deposito(amount)
         return self
     
     def hacer_retiro(self,amount):
-        self.cuenta.retiro(amount)
+        self.cuenta["savings"].retiro(amount)
         return self
     
     def mostrar_balance_usuario(self):
-        print('balance: $%d'%(self.cuenta.balance))
+        print(f"User: {self.name}, Checking Balance: {self.cuenta['checking'].mostrar_info_cuenta()}")
+        print(f"User: {self.name}, Savings Balance: {self.cuenta['savings'].mostrar_info_cuenta()}")
         return self
